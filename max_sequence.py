@@ -22,21 +22,21 @@ def max_sequence(arr):
     if not max(arr) > 0:
         return 0
 
-    max_sum = 0
-    cur_sum = 0
-    for start in range(len(arr)):
+    max_sum, cur_sum = 0, 0
 
-        for j in range(start, len(arr)):
-            cur_sum = sum(arr[start:j+1])
-            if cur_sum > max_sum:
-                max_sum = cur_sum
+    for number in arr:
+        cur_sum += number
+        cur_sum = max(cur_sum, 0)
+
+        if cur_sum > max_sum:
+            max_sum = cur_sum
 
     return max_sum
 
 
 if __name__ == "__main__":
 
-    print("Hello World")
+    
     print(f"{max_sequence([-2, 1, -3, 4, -1, 2, 1, -5, 4])} should equal 6")
     print(
         f"{max_sequence([-2, -1, -3, -4, -1, -2, -1, -5, -4])} should equal 0")
