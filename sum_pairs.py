@@ -16,26 +16,48 @@ def sum_pairs(list_of_integers, sum_value):
     '''
     first_value = 0
     second_value = 0
-    second_index = None
+    comp_index = None
+
+    for outer_loop_index, outer_value in enumerate(list_of_integers):
+        for inner_loop_index, inner_value in enumerate(list_of_integers[outer_loop_index+1:]):
+            print(f"Outer: {outer_loop_index} Inner: {inner_loop_index}  comp_index: {comp_index}")
+            if outer_value + inner_value == sum_value:
+                if comp_index is None:
+                    comp_index = inner_loop_index
+                    first_value = outer_value
+                    second_value = inner_value
+                elif inner_loop_index < comp_index:
+                    comp_index = inner_loop_index
+                    first_value = outer_value
+                    second_value = inner_value
+                elif outer_loop_index == comp_index:
+                    break
+
+    if comp_index is None:
+        return None
+
+    return [first_value, second_value]
 
 
-    for outer_loop_index in range(len(list_of_integers)):
-        for inner_loop_index in range(outer_loop_index+1, len(list_of_integers)):
-            if list_of_integers[outer_loop_index] + list_of_integers[inner_loop_index] == sum_value:
-                if second_index is None:
-                    first_value = list_of_integers[outer_loop_index]
-                    second_value = list_of_integers[inner_loop_index]
-                    second_index = inner_loop_index
-                elif inner_loop_index < second_index:
-                    first_value = list_of_integers[outer_loop_index]
-                    second_value = list_of_integers[inner_loop_index]
-                    second_index = inner_loop_index
 
+def sum_pairs_sol(lst, s):
+    '''
+    This was the codewars solution. It uses a set to store the values that have been seen.
+    Pretty smart way of addressing this. I didn't think of using a set....
 
-                return [list_of_integers[outer_loop_index], list_of_integers[inner_loop_index]]
+    
+    Arguments:
+        lst -- _description_
+        s -- _description_
 
-    return None
-
+    Returns:
+        _description_
+    '''    
+    cache = set()
+    for i in lst:
+        if s - i in cache:
+            return [s - i, i]
+        cache.add(i)
 
 if __name__ == "__main__":
     print(sum_pairs([1, 4, 8, 7, 3, 15], 8))
